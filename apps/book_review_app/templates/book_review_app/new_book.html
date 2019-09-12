@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Add Book and Review</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'book_review_app/css/new_book_style.css' %}">
+</head>
+<body>
+    <div class="contaainer">
+        <div class="banner">
+            <a class="home" href="/books">Home</a>
+            <a class="logout" href="/logout">Logout</a>
+        </div>
+        <h2>Add a New Book Title and a Review</h2>
+        <form action="/books/new" method="post">
+            {% csrf_token %}
+            <div class="form-group col-md-3">
+                <label for="inputEmail4">Book Title</label>
+                <input type="title" class="form-control" id="inputEmail4" placeholder="title" name="title">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="inputState">Author:</label>
+                <select id="inputState" class="form-control" name="existing_author">
+                    <option selected value="">Choose from an Author</option>
+                    {% for author in authors %}
+                    <option value="{{author.id}}">{{author.author_name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-md-3">
+                <input type="text" class="form-control" id="inputEmail4" placeholder="Or add a new author:" name="new_author">
+            </div>
+            <div class="form-group col-md-3">
+                <label for="validationTextarea">Review</label>
+                <textarea class="form-control" id="validationTextarea" rows="4" name="review" placeholder="Enter a review" required></textarea>
+            </div>
+            <div class="form-group col-md-1">
+                <label for="inputState">Rating:</label>
+                <select id="inputState" class="form-control" name="rating">
+                    <option selected value="0">Choose...</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Book and Review</button>
+        </form>
+        <div class="errors">
+            {% if messages %}
+            <h6>Found Errors!</h6>
+                <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Important: {% endif %}
+                    {{ message }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

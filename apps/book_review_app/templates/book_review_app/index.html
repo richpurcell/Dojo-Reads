@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Books Home</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'book_review_app/css/style.css' %}">
+</head>
+<body>
+    <div class="contaainer">
+        <div class="banner">
+            <h2 class="welcome">Welcome, {{first_name}}!</h2>
+            <a class="add" href="/books/add">Add Book and Review</a>
+            <a class="logout" href="/logout">Logout</a>
+        </div>
+        <div class="lower">
+            <div class="recent">
+                <h4>Recent Book Reviews:</h4>
+                {% for review in reviews %}
+                <div class="invisiBox">
+                    <a href="/books/{{review.book_id}}">{{review.title}}</a>
+                    <span><h6>Rating:</h6> {{review.rating}}</span>
+                    <div class="rev">
+                        <span><a href="/books/user/{{review.user_id}}">{{review.first_name}}</a> says: {{review.review}}</span>
+                    </div>
+                    <div class="created_at">
+                    {{review.created_at}}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="other">
+                <h4>Other Books with Reviews:</h4>
+                <div class="scrollbox">
+                    {% for book in books %}
+                    <a href="/books/{{book.id}}">{{book.title}}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
